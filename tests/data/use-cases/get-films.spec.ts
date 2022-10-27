@@ -40,4 +40,12 @@ describe("GetFilms Use Case", () => {
       },
     ]);
   });
+
+  test("Should rethrow if getFilmsRepository throws", async () => {
+    const { sut, getFilmsRepositorySpy } = makeSut();
+    jest.spyOn(getFilmsRepositorySpy, "getAll").mockRejectedValueOnce(new Error("getAll throws"));
+    const resultPromise = sut.execute();
+
+    await expect(resultPromise).rejects.toThrow(new Error("getAll throws"));
+  });
 });
