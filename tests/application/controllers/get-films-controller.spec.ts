@@ -1,4 +1,4 @@
-import { GetFilmsController } from "@/application/controllers";
+import { Controller, GetFilmsController } from "@/application/controllers";
 import { GetFilmsStub } from "@/tests/application/mocks";
 
 const makeSut = () => {
@@ -12,6 +12,12 @@ const makeSut = () => {
 };
 
 describe("GetFilms Controller", () => {
+  test("Should extend Controller", async () => {
+    const { sut } = makeSut();
+
+    expect(sut).toBeInstanceOf(Controller);
+  });
+
   test("Should call getFilms use case", async () => {
     const { sut, getFilmsStub } = makeSut();
     const executeSpy = jest.spyOn(getFilmsStub, "execute");
