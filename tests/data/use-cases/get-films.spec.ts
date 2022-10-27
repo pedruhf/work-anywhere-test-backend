@@ -1,5 +1,5 @@
 import { GetFilms } from "@/data/use-cases";
-import { GetFilmsRepositorySpy, getMockedFilmList } from "@/tests/data/mocks";
+import { GetFilmsRepositorySpy } from "@/tests/data/mocks";
 
 const makeSut = () => {
   const getFilmsRepositorySpy = new GetFilmsRepositorySpy();
