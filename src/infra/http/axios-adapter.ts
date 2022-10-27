@@ -12,7 +12,7 @@ export class AxiosAdapter implements HttpClient {
     // this.httpClient.interceptors.request.use()
   }
 
-  async request<T = any>(url: string, method: HttpMethods, options: AxiosRequestConfig): Promise<HttpResponse> {
+  async request<T = any>(url: string, method: HttpMethods, options?: AxiosRequestConfig): Promise<HttpResponse> {
     const result = await this.httpClient.request<T>({
       url,
       method,
