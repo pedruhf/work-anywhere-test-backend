@@ -2,14 +2,14 @@ import { Film } from "@/domain/models";
 
 export const getMockedFilmList = (): Film[] => ([
   {
-    id: "any_id_1",
+    id: 1,
     title: "any_title_1",
     description: "any_description_1",
     director: "any_director_1",
     producer: "any_producer_1",
   },
   {
-    id: "any_id_2",
+    id: 2,
     title: "any_title_2",
     description: "any_description_2",
     director: "any_director_2",
