@@ -14,6 +14,7 @@ module.exports = {
   },
   coveragePathIgnorePatterns: [
     "<rootDir>/src/main",
+    "<rootDir>/src/infra/database/postgres/migrations",
     "index.ts",
   ],
   clearMocks: true,

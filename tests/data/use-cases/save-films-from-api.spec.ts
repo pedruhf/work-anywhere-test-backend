@@ -23,10 +23,10 @@ describe("SaveFilmsFromApi Use Case", () => {
     const requestSpy = jest.spyOn(httpClientStub, "request");
     await sut.execute();
 
-    expect(requestSpy).toHaveBeenCalledWith("any_url", "get");
+    expect(requestSpy).toHaveBeenCalledWith("/films", "get");
   });
 
-  test("Should call httpClient with correct input", async () => {
+  test("Should call saveFilmsFromApiRepositoryStub with correct input", async () => {
     const { sut, httpClientStub, saveFilmsFromApiRepositoryStub } = makeSut();
     const mockedHttpResponse: HttpResponse = {
       statusCode: 200,
@@ -72,5 +72,18 @@ describe("SaveFilmsFromApi Use Case", () => {
     const resultPromise = sut.execute();
 
     await expect(resultPromise).rejects.toThrow(new Error("save throws"));
+  });
+
+  test("Should rethrow if data is falsy", async () => {
+    const { sut, httpClientStub } = makeSut();
+    jest
+      .spyOn(httpClientStub, "request")
+      .mockResolvedValueOnce({
+        statusCode: 200,
+        data: undefined,
+      });
+    const resultPromise = sut.execute();
+
+    await expect(resultPromise).rejects.toThrow(new Error("Erro ao buscar films na API"));
   });
 });

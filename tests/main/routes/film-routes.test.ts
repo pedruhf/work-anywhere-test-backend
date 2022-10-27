@@ -45,4 +45,13 @@ describe("Films Routes", () => {
       });
     });
   });
+
+  describe("GET /save-films-from-api", () => {
+    test("Should save a list of films", async () => {
+      const { statusCode, body } = await request(app).post("/api/save-films-from-api");
+
+      expect(statusCode).toBe(200);
+      expect(body).toMatchObject({ message: 'Dados inseridos com sucesso' });
+    });
+  });
 });

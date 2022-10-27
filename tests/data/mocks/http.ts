@@ -9,6 +9,7 @@ export class HttpClientStub implements HttpClient {
   ): Promise<HttpResponse<any>> {
     return Promise.resolve({
       statusCode: 200,
+      data: []
     });
   }
 }
