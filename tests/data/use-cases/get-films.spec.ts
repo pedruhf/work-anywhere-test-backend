@@ -1,23 +1,5 @@
-import { Film } from "@/domain/models";
-
-export class GetFilms {
-  constructor (private readonly getFilmsRepository: GetFilmsRepository) {}
-
-  async execute(): Promise<void> {
-    await this.getFilmsRepository.getAll();
-    return Promise.resolve();
-  }
-}
-
-export interface GetFilmsRepository {
-  getAll(): Promise<Film[]>;
-}
-
-export class GetFilmsRepositorySpy implements GetFilmsRepository {
-  async getAll(): Promise<Film[]> {
-    return Promise.resolve([]);
-  }
-}
+import { GetFilms } from "@/data/use-cases";
+import { GetFilmsRepositorySpy, getMockedFilmList } from "@/tests/data/mocks";
 
 const makeSut = () => {
   const getFilmsRepositorySpy = new GetFilmsRepositorySpy();
@@ -25,8 +7,8 @@ const makeSut = () => {
   return {
     sut,
     getFilmsRepositorySpy,
-  }
-}
+  };
+};
 
 describe("GetFilms Use Case", () => {
   test("Should call getFilmsRepository", async () => {
@@ -35,5 +17,27 @@ describe("GetFilms Use Case", () => {
     await sut.execute();
 
     expect(getAllSpy).toHaveBeenCalled();
+  });
+
+  test("Should return a list of films on success", async () => {
+    const { sut } = makeSut();
+    const result = await sut.execute();
+
+    expect(result).toEqual([
+      {
+        id: "any_id_1",
+        title: "any_title_1",
+        description: "any_description_1",
+        director: "any_director_1",
+        producer: "any_producer_1",
+      },
+      {
+        id: "any_id_2",
+        title: "any_title_2",
+        description: "any_description_2",
+        director: "any_director_2",
+        producer: "any_producer_2",
+      },
+    ]);
   });
 });
