@@ -5,15 +5,15 @@ export class PgFilm {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ name: "titulo", nullable: true })
+  @Column({ name: "titulo", nullable: false })
   title!: string;
 
-  @Column({ name: "descricao", nullable: true })
+  @Column({ name: "descricao", nullable: false })
   description!: string;
 
-  @Column({ name: "diretor", nullable: true })
+  @Column({ name: "diretor", nullable: false })
   director!: string;
 
-  @Column({ name: "produtor", nullable: true })
+  @Column({ name: "produtor", nullable: false })
   producer!: string;
 }

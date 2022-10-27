@@ -1,15 +1,4 @@
-import { Controller, GetFilmsController } from "@/application/controllers";
-import { HttpResponse, serverError, success } from "@/application/helpers";
-
-class ControllerStub extends Controller {
-  async perform(): Promise<HttpResponse> {
-    try {
-      return success("any_response");
-    } catch (error) {
-      return serverError(<Error>error);
-    }
-  }
-}
+import { ControllerStub } from "@/tests/application/mocks";
 
 const makeSut = () => {
   const sut = new ControllerStub();
