@@ -1,15 +1,15 @@
+import { Film } from "@/domain/models";
 import { GetFilms } from "@/domain/features";
-import { HttpResponse, serverError, success } from "@/application/helpers";
+import { Controller } from "@/application/controllers";
+import { HttpResponse, success } from "@/application/helpers";
 
-export class GetFilmsController {
-  constructor(private readonly getFilms: GetFilms) {}
+export class GetFilmsController extends Controller {
+  constructor(private readonly getFilms: GetFilms) {
+    super();
+  }
 
-  async handle(): Promise<HttpResponse> {
-    try {
-      const response = await this.getFilms.execute();
-      return success(response);
-    } catch (error) {
-      return serverError(<Error>error);
-    }
+  async perform(): Promise<HttpResponse<Film[]>> {
+    const response = await this.getFilms.execute();
+    return success(response);
   }
 }

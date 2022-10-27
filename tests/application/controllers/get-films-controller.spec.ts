@@ -15,28 +15,23 @@ describe("GetFilms Controller", () => {
   test("Should call getFilms use case", async () => {
     const { sut, getFilmsStub } = makeSut();
     const executeSpy = jest.spyOn(getFilmsStub, "execute");
-    await sut.handle();
+    await sut.perform();
 
     expect(executeSpy).toBeCalled();
   });
 
-  test("Should return serverError if getFilms throws", async () => {
+  test("Should rethrow if getFilms throws", async () => {
     const { sut, getFilmsStub } = makeSut();
     const error = new Error("getFilms throws");
     jest.spyOn(getFilmsStub, "execute").mockRejectedValueOnce(error);
-    const result = await sut.handle();
+    const resultPromise = sut.perform();
 
-    expect(result).toMatchObject({
-      statusCode: 500,
-      data: {
-        message: "getFilms throws",
-      },
-    });
+    await expect(resultPromise).rejects.toThrow(new Error("getFilms throws"));
   });
 
   test("Should return success with data on success", async () => {
     const { sut } = makeSut();
-    const result = await sut.handle();
+    const result = await sut.perform();
 
     expect(result).toMatchObject({
       statusCode: 200,
