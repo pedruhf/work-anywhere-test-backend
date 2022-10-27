@@ -17,5 +17,4 @@ module.exports = {
     "index.ts",
   ],
   clearMocks: true,
-  setupFiles: ["dotenv/config"]
 };
