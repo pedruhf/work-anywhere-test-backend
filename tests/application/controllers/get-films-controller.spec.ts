@@ -1,41 +1,5 @@
-import { GetFilms } from "@/domain/features";
-import { Film } from "@/domain/models";
-import { getMockedFilmList } from "../../data/mocks";
-
-export class GetFilmsController {
-  constructor(private readonly getFilms: GetFilms) {}
-
-  async handle(): Promise<any> {
-    try {
-      const response = await this.getFilms.execute();
-      return success(response);
-    } catch (error) {
-      return serverError(<Error>error);
-    }
-  }
-}
-
-export class GetFilmsStub implements GetFilms {
-  async execute(): Promise<Film[]> {
-    return Promise.resolve(getMockedFilmList());
-  }
-}
-
-const success = <T = any>(data?: T) => {
-  return {
-    statusCode: 200,
-    data,
-  };
-};
-
-const serverError = (error: Error) => {
-  return {
-    statusCode: 500,
-    data: {
-      message: error.message,
-    },
-  };
-};
+import { GetFilmsController } from "@/application/controllers";
+import { GetFilmsStub } from "@/tests/application/mocks";
 
 const makeSut = () => {
   const getFilmsStub = new GetFilmsStub();
