@@ -1,15 +1,13 @@
 import {
-  Connection,
   createConnection,
   getConnection,
   getConnectionManager,
   getRepository,
-  Repository,
-  ObjectLiteral,
-  ObjectType,
 } from "typeorm";
 
 import { PgFilm } from "@/infra/database/postgres/entities";
+import { PgConnection } from "@/infra/database/postgres";
+import { ConnectionNotFoundError } from "@/infra/database/errors";
 
 jest.mock("typeorm", () => ({
   getConnectionManager: jest.fn(),
@@ -20,52 +18,6 @@ jest.mock("typeorm", () => ({
   PrimaryGeneratedColumn: jest.fn(),
   Column: jest.fn(),
 }));
-
-class PgConnection {
-  private static instance?: PgConnection;
-  private connection?: Connection;
-
-  private constructor() {}
-
-  static getInstance(): PgConnection {
-    if (!PgConnection.instance) {
-      PgConnection.instance = new PgConnection();
-    }
-
-    return PgConnection.instance;
-  }
-
-  public async connect(): Promise<void> {
-    if (getConnectionManager().has("default")) {
-      this.connection = getConnection();
-      return;
-    }
-
-    this.connection = await createConnection();
-  }
-
-  public async disconnect(): Promise<void> {
-    if (!this.connection) {
-      throw new ConnectionNotFoundError();
-    }
-    await getConnection().close();
-    this.connection = undefined;
-  }
-
-  public getRepository<Entity extends ObjectLiteral>(
-    entity: ObjectType<Entity>
-  ): Repository<Entity> {
-    if (!this.connection) throw new ConnectionNotFoundError();
-    return getRepository(entity);
-  }
-}
-
-export class ConnectionNotFoundError extends Error {
-  constructor() {
-    super("Connection not Found");
-    this.name = "ConnectionNotFound";
-  }
-}
 
 describe("PgConnection", () => {
   let hasSpy: jest.Mock;
@@ -152,6 +104,8 @@ describe("PgConnection", () => {
 
   test("Should return ConnectionNotFoundError on getRepository when connection does not exists", async () => {
     expect(getRepository).not.toHaveBeenCalled();
-    expect(() => sut.getRepository(PgFilm)).toThrow(new ConnectionNotFoundError());
+    expect(() => sut.getRepository(PgFilm)).toThrow(
+      new ConnectionNotFoundError()
+    );
   });
 });
