@@ -1,6 +1,6 @@
 import { Controller } from "@/application/controllers";
 import { HttpResponse, serverError, success } from "@/application/helpers";
-import { GetFilms } from "@/domain/features";
+import { GetFilms, SaveFilmsFromApi } from "@/domain/features";
 import { Film } from "@/domain/models";
 import { getMockedFilmList } from "@/tests/domain/mocks";
 
@@ -17,5 +17,11 @@ export class ControllerStub extends Controller {
     } catch (error) {
       return serverError(<Error>error);
     }
+  }
+}
+
+export class SaveFilmsFromApiStub implements SaveFilmsFromApi {
+  async execute(): Promise<void> {
+    return Promise.resolve();
   }
 }

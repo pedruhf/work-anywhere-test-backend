@@ -7,5 +7,3 @@ export class GetFilmsRepositoryStub implements GetFilmsRepository {
     return Promise.resolve(getMockedFilmList());
   }
 }
-
-

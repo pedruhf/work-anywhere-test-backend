@@ -1,3 +1,4 @@
+import { PgConnection } from "@/infra/database/postgres";
 import { createConnection } from "typeorm";
 
 export const dbTestConnection = async (entities?: any[]) => {
@@ -11,5 +12,6 @@ export const dbTestConnection = async (entities?: any[]) => {
     entities: entities ?? ["src/infra/database/postgres/entities/index.ts"],
   });
   await connection.synchronize();
+  await PgConnection.getInstance().connect();
   return connection;
 };

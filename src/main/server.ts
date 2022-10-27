@@ -1,5 +1,6 @@
 import "./config/module-alias";
 import "reflect-metadata";
+
 import { PgConnection } from "@/infra/database/postgres";
 
 PgConnection.getInstance().connect()

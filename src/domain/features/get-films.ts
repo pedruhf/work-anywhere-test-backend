@@ -1,5 +1,3 @@
-import { Film } from "@/domain/models";
-
-export interface GetFilms {
-  execute(): Promise<Film[]>;
+export interface SaveFilmsFromApi {
+  execute(): Promise<void>;
 }
