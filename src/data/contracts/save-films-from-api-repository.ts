@@ -6,5 +6,5 @@ export type SaveFilmsFromApiInput = {
 }
 
 export interface SaveFilmsFromApiRepository {
-  save(data: SaveFilmsFromApiInput | SaveFilmsFromApiInput[]): Promise<void>;
+  save(data: SaveFilmsFromApiInput[]): Promise<void>;
 }

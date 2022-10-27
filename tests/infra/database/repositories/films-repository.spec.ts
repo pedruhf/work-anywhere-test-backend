@@ -25,7 +25,6 @@ describe("Films Repository", () => {
   describe("getAll", () => {
     test("Should return a list of films", async () => {
       await PgFilmRepository.save({
-        id: 1,
         title: "any_title",
         description: "any_description",
         director: "any_director",
@@ -41,6 +40,29 @@ describe("Films Repository", () => {
           producer: "any_producer",
         },
       ]);
+    });
+  });
+
+  describe("save", () => {
+    test("Should save a list of films", async () => {
+      const filmsData = [
+        {
+          title: "any_title_1",
+          description: "any_description_1",
+          director: "any_director_1",
+          producer: "any_producer_1",
+        },
+        {
+          title: "any_title_2",
+          description: "any_description_2",
+          director: "any_director_2",
+          producer: "any_producer_2",
+        }
+      ];
+      await sut.save(filmsData);
+      const films = await sut.getAll();
+
+      expect(films).toMatchObject(filmsData);
     });
   });
 });
