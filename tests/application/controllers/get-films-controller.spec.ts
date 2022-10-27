@@ -1,12 +1,14 @@
 import { GetFilms } from "@/domain/features";
 import { Film } from "@/domain/models";
+import { getMockedFilmList } from "../../data/mocks";
 
 export class GetFilmsController {
   constructor(private readonly getFilms: GetFilms) {}
 
   async handle(): Promise<any> {
     try {
-      await this.getFilms.execute();
+      const response = await this.getFilms.execute();
+      return success(response);
     } catch (error) {
       return serverError(<Error>error);
     }
@@ -15,9 +17,16 @@ export class GetFilmsController {
 
 export class GetFilmsStub implements GetFilms {
   async execute(): Promise<Film[]> {
-    return Promise.resolve([]);
+    return Promise.resolve(getMockedFilmList());
   }
 }
+
+const success = <T = any>(data?: T) => {
+  return {
+    statusCode: 200,
+    data,
+  };
+};
 
 const serverError = (error: Error) => {
   return {
@@ -58,6 +67,31 @@ describe("GetFilms Controller", () => {
       data: {
         message: "getFilms throws",
       },
+    });
+  });
+
+  test("Should return success with data on success", async () => {
+    const { sut } = makeSut();
+    const result = await sut.handle();
+
+    expect(result).toMatchObject({
+      statusCode: 200,
+      data: [
+        {
+          id: "any_id_1",
+          title: "any_title_1",
+          description: "any_description_1",
+          director: "any_director_1",
+          producer: "any_producer_1",
+        },
+        {
+          id: "any_id_2",
+          title: "any_title_2",
+          description: "any_description_2",
+          director: "any_director_2",
+          producer: "any_producer_2",
+        },
+      ],
     });
   });
 });
