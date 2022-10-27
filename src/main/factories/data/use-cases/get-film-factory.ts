@@ -1,5 +1,7 @@
 import { GetFilms } from "@/data/use-cases";
+import { makeFilmsRepository } from "@/main/factories/infra/database";
 
 export const makeGetFilm = (): GetFilms => {
-  return new GetFilms();
+  const filmsRepository = makeFilmsRepository();
+  return new GetFilms(filmsRepository);
 };

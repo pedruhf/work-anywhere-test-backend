@@ -1,22 +1,8 @@
 import { Connection, Repository } from "typeorm";
 
-import { PgConnection } from "@/infra/database/postgres";
 import { PgFilm } from "@/infra/database/postgres/entities";
-import { GetFilmsRepository } from "@/data/contracts";
-import { Film } from "@/domain/models";
-import { dbTestConnection } from "../../mocks";
-
-export class FilmsRepository implements GetFilmsRepository {
-  constructor(
-    private readonly connection: PgConnection = PgConnection.getInstance()
-  ) {}
-
-  async getAll(): Promise<Film[]> {
-    const pgFilmRepository = this.connection.getRepository(PgFilm);
-    const pgFilms = await pgFilmRepository.find();
-    return pgFilms;
-  }
-}
+import { dbTestConnection } from "@/tests/infra/mocks";
+import { FilmsRepository } from "@/infra/database/repositories";
 
 describe("Films Repository", () => {
   let connection: Connection;
@@ -47,12 +33,14 @@ describe("Films Repository", () => {
       });
       const result = await sut.getAll();
 
-      expect(result).toMatchObject([{
-        title: "any_title",
-        description: "any_description",
-        director: "any_director",
-        producer: "any_producer",
-      }]);
+      expect(result).toMatchObject([
+        {
+          title: "any_title",
+          description: "any_description",
+          director: "any_director",
+          producer: "any_producer",
+        },
+      ]);
     });
   });
 });
