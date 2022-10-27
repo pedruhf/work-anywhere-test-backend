@@ -1,19 +1,19 @@
 import { GetFilms } from "@/data/use-cases";
-import { GetFilmsRepositorySpy } from "@/tests/data/mocks";
+import { GetFilmsRepositoryStub } from "@/tests/data/mocks";
 
 const makeSut = () => {
-  const getFilmsRepositorySpy = new GetFilmsRepositorySpy();
-  const sut = new GetFilms(getFilmsRepositorySpy);
+  const getFilmsRepositoryStub = new GetFilmsRepositoryStub();
+  const sut = new GetFilms(getFilmsRepositoryStub);
   return {
     sut,
-    getFilmsRepositorySpy,
+    getFilmsRepositoryStub,
   };
 };
 
 describe("GetFilms Use Case", () => {
   test("Should call getFilmsRepository", async () => {
-    const { sut, getFilmsRepositorySpy } = makeSut();
-    const getAllSpy = jest.spyOn(getFilmsRepositorySpy, "getAll");
+    const { sut, getFilmsRepositoryStub } = makeSut();
+    const getAllSpy = jest.spyOn(getFilmsRepositoryStub, "getAll");
     await sut.execute();
 
     expect(getAllSpy).toHaveBeenCalled();
@@ -42,8 +42,8 @@ describe("GetFilms Use Case", () => {
   });
 
   test("Should rethrow if getFilmsRepository throws", async () => {
-    const { sut, getFilmsRepositorySpy } = makeSut();
-    jest.spyOn(getFilmsRepositorySpy, "getAll").mockRejectedValueOnce(new Error("getAll throws"));
+    const { sut, getFilmsRepositoryStub } = makeSut();
+    jest.spyOn(getFilmsRepositoryStub, "getAll").mockRejectedValueOnce(new Error("getAll throws"));
     const resultPromise = sut.execute();
 
     await expect(resultPromise).rejects.toThrow(new Error("getAll throws"));

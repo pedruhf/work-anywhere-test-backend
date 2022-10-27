@@ -1,7 +1,7 @@
 import { GetFilmsRepository } from "@/data/contracts";
 import { Film } from "@/domain/models";
 
-export class GetFilmsRepositorySpy implements GetFilmsRepository {
+export class GetFilmsRepositoryStub implements GetFilmsRepository {
   async getAll(): Promise<Film[]> {
     return Promise.resolve(getMockedFilmList());
   }
