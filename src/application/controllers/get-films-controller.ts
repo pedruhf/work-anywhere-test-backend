@@ -8,8 +8,14 @@ export class GetFilmsController extends Controller {
     super();
   }
 
-  async perform(): Promise<HttpResponse<Film[]>> {
-    const response = await this.getFilms.execute();
+  async perform(httpRequest?: any): Promise<HttpResponse<Film[]>> {
+    let response: Film[];
+    if (httpRequest?.query) {
+      const { limit, page } = httpRequest?.query;
+      response = await this.getFilms.execute({ limit, page });
+    } else {
+      response = await this.getFilms.execute();
+    }
     return success(response);
   }
 }

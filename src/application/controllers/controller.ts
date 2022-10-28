@@ -1,7 +1,7 @@
 import { HttpResponse, serverError } from "../helpers";
 
 export abstract class Controller {
-  abstract perform(httpRequest: any): Promise<HttpResponse>;
+  abstract perform(httpRequest?: any): Promise<HttpResponse>;
 
   async handle(httpRequest?: any): Promise<HttpResponse> {
     try {

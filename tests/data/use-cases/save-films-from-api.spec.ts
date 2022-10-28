@@ -1,12 +1,12 @@
 import { HttpResponse } from "@/application/helpers";
-import { SaveFilmsFromApi } from "@/data/use-cases";
+import { DbSaveFilmsFromApi } from "@/data/use-cases";
 import { SaveFilmsFromApiRepositoryStub } from "@/tests/data/mocks";
 import { HttpClientStub } from "@/tests/data/mocks";
 
 const makeSut = () => {
   const httpClientStub = new HttpClientStub();
   const saveFilmsFromApiRepositoryStub = new SaveFilmsFromApiRepositoryStub();
-  const sut = new SaveFilmsFromApi(
+  const sut = new DbSaveFilmsFromApi(
     httpClientStub,
     saveFilmsFromApiRepositoryStub
   );

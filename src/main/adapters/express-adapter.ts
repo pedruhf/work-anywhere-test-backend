@@ -6,6 +6,8 @@ export const expressAdapter = (controller: Controller) => {
   return async (req: Request, res: Response) => {
     const request = {
       body: req.body,
+      params: req.params,
+      query: req.query,
     };
 
     const { statusCode, data } = await controller.handle(request);

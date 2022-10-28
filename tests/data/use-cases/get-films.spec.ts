@@ -1,16 +1,16 @@
-import { GetFilms } from "@/data/use-cases";
+import { DbGetFilms } from "@/data/use-cases";
 import { GetFilmsRepositoryStub } from "@/tests/data/mocks";
 
 const makeSut = () => {
   const getFilmsRepositoryStub = new GetFilmsRepositoryStub();
-  const sut = new GetFilms(getFilmsRepositoryStub);
+  const sut = new DbGetFilms(getFilmsRepositoryStub);
   return {
     sut,
     getFilmsRepositoryStub,
   };
 };
 
-describe("GetFilms Use Case", () => {
+describe("DbGetFilms Use Case", () => {
   test("Should call getFilmsRepository", async () => {
     const { sut, getFilmsRepositoryStub } = makeSut();
     const getAllSpy = jest.spyOn(getFilmsRepositoryStub, "getAll");

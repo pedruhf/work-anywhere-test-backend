@@ -18,10 +18,11 @@ describe("Films Routes", () => {
   beforeEach(async () => {
     sut = new FilmsRepository(connection as any);
     PgFilmRepository = connection.getRepository(PgFilm);
+    await PgFilmRepository.clear();
   });
 
   afterEach(async () => {
-    PgFilmRepository.clear();
+    await PgFilmRepository.clear();
   });
 
   describe("GET /films", () => {
