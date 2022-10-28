@@ -1,5 +1,5 @@
-import { filmsPath } from "./paths";
-import { filmsSchema } from "./schemas";
+import { filmsGetPath, filmsPostPath } from "./paths";
+import { filmArraySchema, filmSchema } from "./schemas";
 
 export default {
   "openapi": "3.0.0",
@@ -16,9 +16,11 @@ export default {
     name: "Filmes"
   }],
   paths: {
-    "/films": filmsPath
+    "/films": filmsGetPath,
+    "/save-films-from-api": filmsPostPath,
   },
   schemas: {
-    film: filmsSchema,
+    film: filmSchema,
+    filmArray: filmArraySchema,
   }
 }
