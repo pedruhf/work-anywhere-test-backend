@@ -8,7 +8,10 @@
     "dev": "ts-node-dev --respawn --transpile-only --clear -r dotenv/config --inspect=0.0.0.0:9229 src/main/server.ts",
     "test": "jest --passWithNoTests --no-cache --runInBand --forceExit",
     "test:watch": "npm run test -- --watch",
-    "test:coverage": "npm run test -- --coverage"
+    "test:coverage": "npm run test -- --coverage",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js",
+    "create-migration": "npm run typeorm migration:create -- -d src/infra/database/postgres/migrations/ -n",
+    "run-migrations": "npm run build && npm run typeorm migration:run"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
