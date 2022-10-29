@@ -13,8 +13,9 @@ export class DbSaveFilmsFromApi implements SaveFilmsFromApi {
     if (!data) throw new Error("Erro ao buscar films na API");
     const converttedData = data!.map<Film>((film) => ({
       title: film.title,
-      director: film.director,
       description: film.description,
+      bannerUrl: film.movie_banner,
+      director: film.director,
       producer: film.producer,
     }));
     await this.saveFilmsFromApiRepository.save(converttedData);

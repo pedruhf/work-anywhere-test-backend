@@ -11,6 +11,9 @@ export class PgFilm {
   @Column({ name: "descricao", nullable: false })
   description!: string;
 
+  @Column({ name: "banner_url", nullable: false })
+  bannerUrl!: string;
+
   @Column({ name: "diretor", nullable: false })
   director!: string;
 

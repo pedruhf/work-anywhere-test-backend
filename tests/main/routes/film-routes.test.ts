@@ -31,6 +31,7 @@ describe("Films Routes", () => {
         id: 1,
         title: "any_title",
         description: "any_description",
+        bannerUrl: "any_url_1",
         director: "any_director",
         producer: "any_producer",
       });
@@ -41,6 +42,7 @@ describe("Films Routes", () => {
       expect(body[0]).toMatchObject({
         title: "any_title",
         description: "any_description",
+        bannerUrl: "any_url_1",
         director: "any_director",
         producer: "any_producer",
       });
