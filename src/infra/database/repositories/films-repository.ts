@@ -1,4 +1,3 @@
-import { Film } from "@/domain/models";
 import {
   GetFilmsRepository,
   SaveFilmsFromApiInput,
@@ -6,7 +5,7 @@ import {
 } from "@/data/contracts";
 import { PgConnection } from "@/infra/database/postgres";
 import { PgFilm } from "@/infra/database/postgres/entities";
-import { GetFilmsFilterParams } from "@/domain/features";
+import { GetFilmsFilterParams, GetFilmsResponse } from "@/domain/features";
 
 export class FilmsRepository
   implements GetFilmsRepository, SaveFilmsFromApiRepository
@@ -15,7 +14,7 @@ export class FilmsRepository
     private readonly connection: PgConnection = PgConnection.getInstance()
   ) {}
 
-  async getAll(filterParams?: GetFilmsFilterParams): Promise<Film[]> {
+  async getAll(filterParams?: GetFilmsFilterParams): Promise<GetFilmsResponse> {
     const pgFilmRepository = this.connection.getRepository(PgFilm);
     let skip: number;
     if (!filterParams) {
@@ -24,11 +23,14 @@ export class FilmsRepository
       skip = (filterParams.page - 1) * filterParams.limit;
     }
 
-    const [pgFilms] = await pgFilmRepository.findAndCount({
+    const [films, totalFilms] = await pgFilmRepository.findAndCount({
       skip: skip || 0,
       take: filterParams?.limit || 10,
     });
-    return pgFilms;
+    return {
+      films,
+      totalFilms,
+    };
   }
 
   async save(data: SaveFilmsFromApiInput[]): Promise<void> {

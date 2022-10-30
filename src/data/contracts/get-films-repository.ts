@@ -1,6 +1,5 @@
-import { GetFilmsFilterParams } from "@/domain/features";
-import { Film } from "@/domain/models";
+import { GetFilmsFilterParams, GetFilmsResponse } from "@/domain/features";
 
 export interface GetFilmsRepository {
-  getAll(filterParams?: GetFilmsFilterParams): Promise<Film[]>;
+  getAll(filterParams?: GetFilmsFilterParams): Promise<GetFilmsResponse>;
 }
