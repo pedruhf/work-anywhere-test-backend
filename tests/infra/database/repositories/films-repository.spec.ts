@@ -34,7 +34,7 @@ describe("Films Repository", () => {
       });
       const result = await sut.getAll();
 
-      expect(result).toMatchObject([
+      expect(result.films).toMatchObject([
         {
           title: "any_title",
           description: "any_description",
@@ -43,6 +43,7 @@ describe("Films Repository", () => {
           producer: "any_producer",
         },
       ]);
+      expect(result.totalFilms).toBe(1);
     });
   });
 
@@ -65,9 +66,10 @@ describe("Films Repository", () => {
         }
       ];
       await sut.save(filmsData);
-      const films = await sut.getAll();
+      const result = await sut.getAll();
 
-      expect(films).toMatchObject(filmsData);
+      expect(result.films).toMatchObject(filmsData);
+      expect(result.totalFilms).toBe(2);
     });
   });
 });

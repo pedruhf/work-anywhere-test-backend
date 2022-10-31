@@ -1,10 +1,13 @@
 import { GetFilmsRepository, SaveFilmsFromApiInput, SaveFilmsFromApiRepository } from "@/data/contracts";
-import { Film } from "@/domain/models";
+import { GetFilmsFilterParams, GetFilmsResponse } from "@/domain/features";
 import { getMockedFilmList } from "@/tests/domain/mocks";
 
 export class GetFilmsRepositoryStub implements GetFilmsRepository {
-  async getAll(): Promise<Film[]> {
-    return Promise.resolve(getMockedFilmList());
+  async getAll(filterParams?: GetFilmsFilterParams): Promise<GetFilmsResponse> {
+    return Promise.resolve({
+      films: getMockedFilmList(),
+      totalFilms: getMockedFilmList().length,
+    });
   }
 }
 

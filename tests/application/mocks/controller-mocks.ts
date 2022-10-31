@@ -1,12 +1,14 @@
 import { Controller } from "@/application/controllers";
 import { HttpResponse, serverError, success } from "@/application/helpers";
-import { GetFilms, SaveFilmsFromApi } from "@/domain/features";
-import { Film } from "@/domain/models";
+import { GetFilms, GetFilmsFilterParams, GetFilmsResponse, SaveFilmsFromApi } from "@/domain/features";
 import { getMockedFilmList } from "@/tests/domain/mocks";
 
 export class GetFilmsStub implements GetFilms {
-  async execute(): Promise<Film[]> {
-    return Promise.resolve(getMockedFilmList());
+  async execute(filterParams?: GetFilmsFilterParams): Promise<GetFilmsResponse> {
+    return Promise.resolve({
+      films: getMockedFilmList(),
+      totalFilms: getMockedFilmList().length,
+    });
   }
 }
 

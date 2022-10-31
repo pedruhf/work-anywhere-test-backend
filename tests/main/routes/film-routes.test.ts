@@ -38,8 +38,9 @@ describe("Films Routes", () => {
       const { statusCode, body } = await request(app).get("/api/films");
 
       expect(statusCode).toBe(200);
-      expect(body[0].id).toBeDefined();
-      expect(body[0]).toMatchObject({
+      expect(body.films.length).toBe(1);
+      expect(body.films[0].id).toBeDefined();
+      expect(body.films[0]).toMatchObject({
         title: "any_title",
         description: "any_description",
         bannerUrl: "any_url_1",

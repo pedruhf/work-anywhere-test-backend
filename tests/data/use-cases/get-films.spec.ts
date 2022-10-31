@@ -23,7 +23,7 @@ describe("DbGetFilms Use Case", () => {
     const { sut } = makeSut();
     const result = await sut.execute();
 
-    expect(result).toEqual([
+    expect(result.films).toEqual([
       {
         id: 1,
         title: "any_title_1",
