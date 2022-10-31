@@ -5,8 +5,8 @@ module.exports = {
   "username": process.env.DB_USERNAME,
   "password": process.env.DB_PASSWORD,
   "database": process.env.DB_DATABASE,
-  "entities": [`src/infra/database/postgres/entities/index.ts`],
-  "migrations": [`src/infra/database/postgres/migrations/*.ts`],
+  "entities": [`dist/src/infra/database/postgres/entities/index.js`],
+  "migrations": [`dist/src/infra/database/postgres/migrations/*.js`],
   "cli": {
     "entitiesDir": "dist/src/infra/database/postgres/entities",
     "migrationsDir": "dist/src/infra/database/postgres/migrations",
