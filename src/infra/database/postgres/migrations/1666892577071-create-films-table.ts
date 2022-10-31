@@ -6,7 +6,7 @@ export class createFilmsTable1666892577071 implements MigrationInterface {
       await queryRunner.createTable(new Table({
         name: "filmes",
         columns: [
-          { name: "id", type: "integer", isNullable: false },
+          { name: "id", type: "int", isPrimary: true, isGenerated: true, generationStrategy: "increment" },
           { name: "titulo", type: "varchar", isNullable: false },
           { name: "descricao", type: "varchar", isNullable: false },
           { name: "diretor", type: "varchar", isNullable: false },

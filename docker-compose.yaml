@@ -8,6 +8,10 @@ services:
       - CHOKIDAR_USEPOLLING=true
     ports:
       - 3000:3000
+    volumes:
+      - .:/home/node/app # Manda tudo que esta em . (meu projeto) para /home/node/app
+      - /home/node/app/node_modules # Preserva node_modules
+      - /home/node/app/dist # Preserva dist
     depends_on:
       - pg
 
@@ -22,3 +26,11 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+
+  migrations:
+    build: .
+    command: npm run run-migrations
+    links:
+      - pg
+    depends_on:
+      - pg
